@@ -51,4 +51,4 @@ if __name__ == '__main__':
         if n >= 10:
             break
 
-    print time.time() - time.time()
+    print time.time() - time_start
