@@ -59,7 +59,7 @@ class Figure(BaseObject):
             width = next_width
 
     def check_single_color(self):
-        all_colors = set(itertools.chain(**self.data))
+        all_colors = set(itertools.chain(*self.data))
         not_null_colors = list(all_colors - {0})
         if len(not_null_colors) == 0:
             raise Exception('Empty figure')
