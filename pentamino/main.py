@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 __author__ = 'toly'
 
+import time
 import copy
 
 from base import Board, Figure, BadPlacingError
@@ -38,9 +39,16 @@ if __name__ == '__main__':
     board = Board(WIDTH, HEIGHT)
     figures_dict = Figure.generate_figures_dict(FIGURES_RAW)
 
+    time_start = time.time()
+
     n = 0
     for decision in make_decisions(board, figures_dict, []):
         n += 1
         print 'decision #%d' % n
 
         print decision
+
+        if n >= 10:
+            break
+
+    print time.time() - time.time()
