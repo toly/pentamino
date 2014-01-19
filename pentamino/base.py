@@ -46,6 +46,8 @@ class Figure(BaseObject):
         self.check_size()
         self.check_single_color()
 
+        self.height = len(self.data)
+        self.width = len(self.data[0])
         self.shift = self.data[0].index(1)
 
     def check_size(self):
@@ -67,3 +69,14 @@ class Figure(BaseObject):
             raise Exception('Too many colors')
         if not_null_colors[0] != 1:
             raise Exception('Need only one color: 1')
+
+    def rotate_right(self):
+
+        new_data = []
+        for j in xrange(self.width):
+            new_row = []
+            for i in xrange(self.height - 1, -1, -1):
+                new_row.append(self.data[i][j])
+            new_data.append(new_row)
+
+        return Figure(new_data)
