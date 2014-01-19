@@ -28,6 +28,10 @@ def make_decisions(board, figures_dict, order):
             except BadPlacingError:
                 pass
             else:
+
+                if current_board.have_isolated_cells():
+                    continue
+
                 del current_figures_dict[figure_color]
                 current_order.append(figure_color)
                 for decision_board in make_decisions(current_board, current_figures_dict, current_order):
