@@ -141,3 +141,10 @@ class Figure(BaseObject):
                     hashes.append(figure.hash_key)
 
         return result
+
+    @classmethod
+    def generate_figures_dict(cls, figures_raw_list):
+        result = {}
+        for index, figure_raw in enumerate(figures_raw_list):
+            result[index + 1] = Figure.generate_shadows(figure_raw)
+        return result
