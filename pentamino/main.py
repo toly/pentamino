@@ -47,12 +47,14 @@ if __name__ == '__main__':
 
     n = 0
     for decision in make_decisions(board, figures_dict, []):
+        time_solve = time.time() - time_start
         n += 1
         print 'decision #%d' % n
+        print 'solved by %f seconds' % time_solve
 
         print decision
 
-        if n >= 10:
-            break
+        # if n >= 10:
+        #     break
 
-    print time.time() - time_start
+        time_start = time.time()
