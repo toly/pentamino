@@ -1,6 +1,6 @@
 __author__ = 'toly'
 
-from base import BaseObject
+from base import BaseObject, Board
 
 
 a = BaseObject()
@@ -10,3 +10,8 @@ a.data = [
 ]
 
 print a
+
+
+b = Board(3, 4)
+b.data[0][0] = 12
+print b
