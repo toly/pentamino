@@ -3,6 +3,10 @@ __author__ = 'toly'
 import itertools
 
 
+class BadPlacingError(Exception):
+    pass
+
+
 class BaseObject(object):
     """
         Base object with show method
@@ -30,6 +34,27 @@ class Board(BaseObject):
         row = [0] * width
         for i in xrange(heigh):
             self.data.append(list(row))
+
+    def set_figure(self, figure, color, x=0, y=0):
+
+        if color == 0:
+            raise Exception('Color must be more than zero')
+
+        if x < 0 or y < 0 or x + figure.width > self.width or y + figure.height > self.height:
+            raise BadPlacingError
+
+        for i in xrange(figure.height):
+            for j in xrange(figure.width):
+
+                if figure.data[i][j] == 0:
+                    continue
+
+                if self.data[y+i][x+j] != 0:
+                    raise BadPlacingError
+
+                self.data[y+i][x+j] = color
+
+
 
 
 class Figure(BaseObject):

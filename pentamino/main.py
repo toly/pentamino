@@ -9,6 +9,7 @@ f = Figure([
 ])
 
 
-for figure in Figure.generate_shadows(f.data):
-    print '-' * 10
-    print figure
+board = Board(5, 8)
+board.set_figure(f, 1, x=2)
+board.set_figure(f, 2, x=0, y=4)
+print board
