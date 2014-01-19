@@ -49,6 +49,7 @@ class Figure(BaseObject):
         self.height = len(self.data)
         self.width = len(self.data[0])
         self.shift = self.data[0].index(1)
+        self.hash_key = self.get_key_hash()
 
     def check_size(self):
         width = None
@@ -84,3 +85,30 @@ class Figure(BaseObject):
     def reflection(self):
         new_data = self.data[::-1]
         return Figure(new_data)
+
+    def get_key_hash(self):
+        rows = []
+        for row in self.data:
+            rows.append(','.join(map(str, row)))
+        return '+'.join(rows)
+
+    @classmethod
+    def generate_shadows(cls, init_figure_data):
+        init_figure = cls(init_figure_data)
+        result, hashes = [init_figure], [init_figure.hash_key]
+
+        reflect_figure = init_figure.reflection()
+        if reflect_figure.hash_key not in hashes:
+            result.append(reflect_figure)
+            hashes.append(reflect_figure.hash_key)
+
+        for i in xrange(3):
+            init_figure = init_figure.rotate_right()
+            reflect_figure = reflect_figure.rotate_right()
+
+            for figure in [init_figure, reflect_figure]:
+                if figure.hash_key not in hashes:
+                    result.append(figure)
+                    hashes.append(figure.hash_key)
+
+        return result

@@ -5,9 +5,10 @@ from base import BaseObject, Board, Figure
 
 f = Figure([
     [1, 0, 0],
-    [1, 1, 0],
+    [1, 1, 1],
 ])
 
-print f
 
-print f.reflection()
+for figure in Figure.generate_shadows(f.data):
+    print '-' * 10
+    print figure
