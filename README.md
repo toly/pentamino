@@ -5,6 +5,7 @@ tool for solve pentamino problem (http://en.wikipedia.org/wiki/Pentomino)
 
 ![pentamino process decision](img/pentomino_process.gif)
 
+![pentamino_figures](img/figures.png)
 
 For start solve pentomino task run main.py:
 
