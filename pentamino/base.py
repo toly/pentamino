@@ -87,6 +87,9 @@ class Figure(BaseObject):
             if next_width == 0:
                 raise Exception('Empty row')
             if not width is None and width != next_width:
+
+                print self.data
+
                 raise Exception('Different lengths of rows')
             width = next_width
 
