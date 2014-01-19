@@ -54,7 +54,11 @@ class Board(BaseObject):
 
                 self.data[y+i][x+j] = color
 
-
+    def get_free_cell(self):
+        for i in xrange(self.height):
+            for j in xrange(self.width):
+                if self.data[i][j] == 0:
+                    return j, i
 
 
 class Figure(BaseObject):

@@ -10,6 +10,7 @@ f = Figure([
 
 
 board = Board(5, 8)
-board.set_figure(f, 1, x=2)
-board.set_figure(f, 2, x=0, y=4)
+board.set_figure(f, 1)
 print board
+
+print board.get_free_cell()
