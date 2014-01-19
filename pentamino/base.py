@@ -27,13 +27,17 @@ class Board(BaseObject):
     width = None
     height = None
 
-    def __init__(self, width, heigh):
+    def __init__(self, width, heigh, data=None):
         self.width, self.height = width, heigh
         self.data = []
 
-        row = [0] * width
-        for i in xrange(heigh):
-            self.data.append(list(row))
+        if data is None:
+            row = [0] * width
+            for i in xrange(heigh):
+                self.data.append(list(row))
+        else:
+            for row in data:
+                self.data.append(list(row))
 
     def set_figure(self, figure, color, x=0, y=0):
 
