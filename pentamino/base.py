@@ -80,3 +80,7 @@ class Figure(BaseObject):
             new_data.append(new_row)
 
         return Figure(new_data)
+
+    def reflection(self):
+        new_data = self.data[::-1]
+        return Figure(new_data)

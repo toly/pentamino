@@ -10,4 +10,4 @@ f = Figure([
 
 print f
 
-print f.rotate_right()
+print f.reflection()
