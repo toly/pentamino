@@ -23,46 +23,48 @@ class BaseObject(object):
         return result
 
 
-class Board(BaseObject):
-    width = None
-    height = None
+def init_board(width, height):
+    board = []
+    row = [0] * width
+    for i in xrange(height):
+        board.append(row)
+    return board
 
-    def __init__(self, width, heigh, data=None):
-        self.width, self.height = width, heigh
-        self.data = []
 
-        if data is None:
-            row = [0] * width
-            for i in xrange(heigh):
-                self.data.append(list(row))
-        else:
-            for row in data:
-                self.data.append(list(row))
+def set_figure(board, width, height, figure, color, x=0, y=0):
+    new_board = map(list, board)
 
-    def set_figure(self, figure, color, x=0, y=0):
+    if x < 0 or y < 0 or x + figure.width > width or y + figure.height > height:
+        raise BadPlacingError
 
-        if color == 0:
-            raise Exception('Color must be more than zero')
+    for i in xrange(figure.height):
+        for j in xrange(figure.width):
 
-        if x < 0 or y < 0 or x + figure.width > self.width or y + figure.height > self.height:
-            raise BadPlacingError
+            if figure.data[i][j] == 0:
+                continue
 
-        for i in xrange(figure.height):
-            for j in xrange(figure.width):
+            if new_board[y+i][x+j] != 0:
+                raise BadPlacingError
 
-                if figure.data[i][j] == 0:
-                    continue
+            new_board[y+i][x+j] = color
 
-                if self.data[y+i][x+j] != 0:
-                    raise BadPlacingError
+    return new_board
 
-                self.data[y+i][x+j] = color
 
-    def get_free_cell(self):
-        for i in xrange(self.height):
-            for j in xrange(self.width):
-                if self.data[i][j] == 0:
-                    return j, i
+def get_free_cell(board, width, height):
+    for i in xrange(height):
+        for j in xrange(width):
+            if board[i][j] == 0:
+                return j, i
+
+
+def print_board(board):
+    result = ''
+    for row in board:
+        for cell in row:
+            result += '{:3d}'.format(cell)
+        result += '\n'
+    print result
 
 
 class Figure(BaseObject):
