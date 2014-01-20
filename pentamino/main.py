@@ -2,7 +2,6 @@
 __author__ = 'toly'
 
 import time
-from copy import deepcopy, copy
 
 from base import Board, Figure, BadPlacingError
 from settings import WIDTH, HEIGHT, FIGURES_RAW
@@ -20,15 +19,12 @@ def make_decisions(board, figures_dict, order):
         for figure in figures_list:
 
             current_board = Board(board.width, board.height, board.data)
-            current_figures_dict = copy(figures_dict)
+            current_figures_dict = dict(figures_dict)
             current_order = list(order)
 
             try:
                 current_board.set_figure(figure, figure_color, x=x-figure.shift, y=y)
             except BadPlacingError:
-                continue
-
-            if current_board.have_isolated_cells():
                 continue
 
             del current_figures_dict[figure_color]

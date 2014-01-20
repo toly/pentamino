@@ -64,36 +64,6 @@ class Board(BaseObject):
                 if self.data[i][j] == 0:
                     return j, i
 
-    def get_cell(self, x, y):
-        return self.data[y][x]
-
-    def nearest_coords_cells(self, x, y):
-        for i in xrange(-1, 2):
-            for j in xrange(-1, 2):
-                if x + i < 0 or y + j < 0:
-                    continue
-                if i == 0 and j == 0:
-                    continue
-                if x + i > self.width - 1 or y + j > self.height - 1:
-                    continue
-
-                yield x + i, y + j
-
-    def cell_isolated(self, x, y):
-        for i, j in self.nearest_coords_cells(x, y):
-            if not self.get_cell(i, j):
-                return False
-        return True
-
-    def have_isolated_cells(self):
-        for i in xrange(self.width):
-            for j in xrange(self.height):
-                if self.get_cell(i, j) != 0:
-                    continue
-                if self.cell_isolated(i, j):
-                    return True
-        return False
-
 
 class Figure(BaseObject):
     data = None
