@@ -3,7 +3,7 @@ __author__ = 'toly'
 
 import time
 
-from base import Figure, BadPlacingError, init_board, set_figure, get_free_cell, print_board
+from base import Figure, init_board, set_figure, get_free_cell, print_board
 from settings import WIDTH, HEIGHT, FIGURES_RAW
 
 
@@ -18,9 +18,9 @@ def make_decisions(board, width, height, figures_dict, order):
     for figure_color, figures_list in figures_dict.items():
         for figure in figures_list:
 
-            try:
-                current_board = set_figure(board, width, height, figure, figure_color, x=x-figure.shift, y=y)
-            except BadPlacingError:
+            current_board = set_figure(board, width, height, figure, figure_color, x=x-figure.shift, y=y)
+
+            if current_board is None:
                 continue
 
             current_figures_dict = dict(figures_dict)
@@ -30,7 +30,7 @@ def make_decisions(board, width, height, figures_dict, order):
             current_order.append(figure_color)
 
             for decision_board in make_decisions(current_board, width, height, current_figures_dict, current_order):
-                if decision_board:
+                if not decision_board is None:
                     yield decision_board
 
 

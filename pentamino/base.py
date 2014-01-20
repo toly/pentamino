@@ -3,10 +3,6 @@ __author__ = 'toly'
 import itertools
 
 
-class BadPlacingError(Exception):
-    pass
-
-
 class BaseObject(object):
     """
         Base object with show method
@@ -35,7 +31,7 @@ def set_figure(board, width, height, figure, color, x=0, y=0):
     new_board = map(list, board)
 
     if x < 0 or y < 0 or x + figure.width > width or y + figure.height > height:
-        raise BadPlacingError
+        return
 
     for i in xrange(figure.height):
         for j in xrange(figure.width):
@@ -44,7 +40,7 @@ def set_figure(board, width, height, figure, color, x=0, y=0):
                 continue
 
             if new_board[y+i][x+j] != 0:
-                raise BadPlacingError
+                return
 
             new_board[y+i][x+j] = color
 
