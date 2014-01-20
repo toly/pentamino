@@ -33,16 +33,10 @@ def set_figure(board, width, height, figure, color, x=0, y=0):
     if x < 0 or y < 0 or x + figure.width > width or y + figure.height > height:
         return
 
-    for i in xrange(figure.height):
-        for j in xrange(figure.width):
-
-            if figure.data[i][j] == 0:
-                continue
-
-            if new_board[y+i][x+j] != 0:
-                return
-
-            new_board[y+i][x+j] = color
+    for i, j in figure.points:
+        if new_board[y+i][x+j] != 0:
+            return
+        new_board[y+i][x+j] = color
 
     return new_board
 
@@ -81,6 +75,14 @@ class Figure(BaseObject):
         self.width = len(self.data[0])
         self.shift = self.data[0].index(1)
         self.hash_key = self.get_key_hash()
+
+        points = []
+        for i in xrange(self.height):
+            for j in xrange(self.width):
+                if self.data[i][j]:
+                    points.append((i, j))
+
+        self.points = tuple(points)
 
     def check_size(self):
         width = None
