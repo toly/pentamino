@@ -7,7 +7,7 @@ from base import Figure, init_board, set_figure, get_free_cell, print_board
 from settings import WIDTH, HEIGHT, FIGURES_RAW
 
 
-def make_decisions(board, width, height, figures_dict, order):
+def make_decisions(board, width, height, figures_dict):
 
     if not figures_dict:
         yield board
@@ -24,12 +24,9 @@ def make_decisions(board, width, height, figures_dict, order):
                 continue
 
             current_figures_dict = dict(figures_dict)
-            current_order = list(order)
-
             del current_figures_dict[figure_color]
-            current_order.append(figure_color)
 
-            for decision_board in make_decisions(current_board, width, height, current_figures_dict, current_order):
+            for decision_board in make_decisions(current_board, width, height, current_figures_dict):
                 if not decision_board is None:
                     yield decision_board
 
@@ -38,14 +35,14 @@ if __name__ == '__main__':
     board = init_board(WIDTH, HEIGHT)
     figures_dict = Figure.generate_figures_dict(FIGURES_RAW)
 
-    board = set_figure(board, WIDTH, HEIGHT, figures_dict[13][0], 13, 3, 3)
-    del figures_dict[13]
+    # board = set_figure(board, WIDTH, HEIGHT, figures_dict[13][0], 13, 3, 3)
+    # del figures_dict[13]
 
     time_start0 = time.time()
     time_start = time_start0
 
     n = 0
-    for decision in make_decisions(board, WIDTH, HEIGHT, figures_dict, []):
+    for decision in make_decisions(board, WIDTH, HEIGHT, figures_dict):
         time_solve = time.time() - time_start
         n += 1
         print 'decision #%d' % n
@@ -53,8 +50,8 @@ if __name__ == '__main__':
 
         print_board(decision)
 
-        if n >= 10:
-            break
+        # if n >= 10:
+        #     break
 
         time_start = time.time()
 
