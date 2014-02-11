@@ -20,6 +20,11 @@ def main():
         board = set_figure(board, WIDTH, HEIGHT, figures_dict[13][0], 13, 3, 3)
         del figures_dict[13]
 
+    if args.pretty_print:
+        board_output = pprint_board
+    else:
+        board_output = print_board
+
     time_start0 = time.time()
     time_start = time_start0
 
@@ -30,7 +35,7 @@ def main():
         print 'decision #%d' % n
         print 'solved by %f seconds' % time_solve
 
-        pprint_board(decision)
+        board_output(decision)
 
         if args.number_decisions and n >= args.number_decisions:
             break
@@ -45,7 +50,7 @@ def create_argparser():
     parser.add_argument('-n', '--number-decisions', type=int, help="need decisions count")
     parser.add_argument('-c', '--center-square', action="store_true", help="show decisions where "
                                                                            "square figure placed in center")
-
+    parser.add_argument('-p', '--pretty-print', action="store_true", help="pretty print decisions (a bit slow)")
     return parser
 
 
