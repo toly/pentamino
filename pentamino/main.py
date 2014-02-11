@@ -2,17 +2,23 @@
 __author__ = 'toly'
 
 import time
+from argparse import ArgumentParser
 
 from base import Figure, init_board, set_figure, get_free_cell, print_board, pprint_board
 from settings import WIDTH, HEIGHT, FIGURES_RAW
 
 
 def main():
+    """entry point"""
+    argparser = create_argparser()
+    args = argparser.parse_args()
+
     board = init_board(WIDTH, HEIGHT)
     figures_dict = Figure.generate_figures_dict(FIGURES_RAW)
 
-    # board = set_figure(board, WIDTH, HEIGHT, figures_dict[13][0], 13, 3, 3)
-    # del figures_dict[13]
+    if args.center_square:
+        board = set_figure(board, WIDTH, HEIGHT, figures_dict[13][0], 13, 3, 3)
+        del figures_dict[13]
 
     time_start0 = time.time()
     time_start = time_start0
@@ -26,12 +32,21 @@ def main():
 
         pprint_board(decision)
 
-        # if n >= 10:
-        #     break
+        if args.number_decisions and n >= args.number_decisions:
+            break
 
         time_start = time.time()
 
     print 'total time:', time.time() - time_start0
+
+
+def create_argparser():
+    parser = ArgumentParser()
+    parser.add_argument('-n', '--number-decisions', type=int, help="need decisions count")
+    parser.add_argument('-c', '--center-square', action="store_true", help="show decisions where "
+                                                                           "square figure placed in center")
+
+    return parser
 
 
 def make_decisions(board, width, height, figures_dict):
