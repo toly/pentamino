@@ -3,7 +3,7 @@ __author__ = 'toly'
 
 import time
 
-from base import Figure, init_board, set_figure, get_free_cell, print_board
+from base import Figure, init_board, set_figure, get_free_cell, print_board, pprint_board
 from settings import WIDTH, HEIGHT, FIGURES_RAW
 
 
@@ -48,7 +48,7 @@ if __name__ == '__main__':
         print 'decision #%d' % n
         print 'solved by %f seconds' % time_solve
 
-        print_board(decision)
+        pprint_board(decision)
 
         # if n >= 10:
         #     break

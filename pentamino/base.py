@@ -20,11 +20,8 @@ class BaseObject(object):
 
 
 def init_board(width, height):
-    board = []
     row = [0] * width
-    for i in xrange(height):
-        board.append(row)
-    return board
+    return [list(row) for i in xrange(height)]
 
 
 def set_figure(board, width, height, figure, color, x=0, y=0):
@@ -55,6 +52,95 @@ def print_board(board):
             result += '{:3d}'.format(cell)
         result += '\n'
     print result
+
+
+def pprint_board(matrix):
+    """
+        pretty print board
+
+        board like:
+        [
+            [1, 2, 2],
+            [2, 2, 2],
+            [2, 3, 3],
+            [2, 4, 3],
+        ]
+
+        will be printed as:
+        +---+---+---+
+        |   |       |
+        +---+       +
+        |           |
+        +   +---+---+
+        |   |       |
+        +   +---+   +
+        |   |   |   |
+        +---+---+---+
+    """
+    WIDTH_FACTOR = 3
+
+    height, width = len(matrix), len(matrix[0])
+    new_height, new_width = map(lambda x: 2 * x + 1, (height, width))
+
+    new_matrix = init_board(new_width, new_height)
+
+    for y in xrange(height):
+        for x in xrange(width):
+            new_x, new_y = map(lambda n: 2 * n + 1, (x, y))
+            new_matrix[new_y][new_x] = matrix[y][x]
+
+    def is_odd(x):
+        return bool(x % 2)
+
+    for y in xrange(new_height):
+        for x in xrange(new_width):
+
+            # corners
+            if (x, y) in ((0, 0), (0, new_height - 1), (new_width - 1, 0), (new_width - 1, new_height - 1)):
+                new_matrix[y][x] = '+'
+                continue
+
+            # top-bottom border lines
+            if is_odd(x) and y in (0, new_height - 1):
+                new_matrix[y][x] = '-' * WIDTH_FACTOR
+                continue
+
+            # right-left border lines
+            if is_odd(y) and x in (0, new_width - 1):
+                new_matrix[y][x] = '|'
+                continue
+
+            # verical line or space between cells
+            if not is_odd(x) and is_odd(y):
+                if new_matrix[y][x-1] != new_matrix[y][x+1]:
+                    new_matrix[y][x] = '|'
+                else:
+                    new_matrix[y][x] = ' '
+                continue
+
+            # horizontal line or space between cells
+            if not is_odd(y) and is_odd(x):
+                if new_matrix[y+1][x] != new_matrix[y-1][x]:
+                    new_matrix[y][x] = '-' * WIDTH_FACTOR
+                else:
+                    new_matrix[y][x] = ' ' * WIDTH_FACTOR
+                continue
+
+            # inner and border corners or spaces
+            if not is_odd(x) and not is_odd(y):
+                new_matrix[y][x] = '+'
+                if 0 < x < new_width - 1 and 0 < y < new_height - 1:
+                    cells = (new_matrix[y-1][x-1], new_matrix[y+1][x-1], new_matrix[y-1][x+1], new_matrix[y+1][x+1], )
+                    if len(set(cells)) == 1:
+                        new_matrix[y][x] = ' '
+
+    for y in xrange(new_height):
+        for x in xrange(new_width):
+            if type(new_matrix[y][x]) is int:
+                new_matrix[y][x] = ' ' * WIDTH_FACTOR
+
+    for row in new_matrix:
+        print ''.join(map(str, row))
 
 
 class Figure(BaseObject):
