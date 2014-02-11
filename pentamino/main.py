@@ -7,6 +7,33 @@ from base import Figure, init_board, set_figure, get_free_cell, print_board, ppr
 from settings import WIDTH, HEIGHT, FIGURES_RAW
 
 
+def main():
+    board = init_board(WIDTH, HEIGHT)
+    figures_dict = Figure.generate_figures_dict(FIGURES_RAW)
+
+    # board = set_figure(board, WIDTH, HEIGHT, figures_dict[13][0], 13, 3, 3)
+    # del figures_dict[13]
+
+    time_start0 = time.time()
+    time_start = time_start0
+
+    n = 0
+    for decision in make_decisions(board, WIDTH, HEIGHT, figures_dict):
+        time_solve = time.time() - time_start
+        n += 1
+        print 'decision #%d' % n
+        print 'solved by %f seconds' % time_solve
+
+        pprint_board(decision)
+
+        # if n >= 10:
+        #     break
+
+        time_start = time.time()
+
+    print 'total time:', time.time() - time_start0
+
+
 def make_decisions(board, width, height, figures_dict):
 
     if not figures_dict:
@@ -32,27 +59,4 @@ def make_decisions(board, width, height, figures_dict):
 
 
 if __name__ == '__main__':
-    board = init_board(WIDTH, HEIGHT)
-    figures_dict = Figure.generate_figures_dict(FIGURES_RAW)
-
-    # board = set_figure(board, WIDTH, HEIGHT, figures_dict[13][0], 13, 3, 3)
-    # del figures_dict[13]
-
-    time_start0 = time.time()
-    time_start = time_start0
-
-    n = 0
-    for decision in make_decisions(board, WIDTH, HEIGHT, figures_dict):
-        time_solve = time.time() - time_start
-        n += 1
-        print 'decision #%d' % n
-        print 'solved by %f seconds' % time_solve
-
-        pprint_board(decision)
-
-        # if n >= 10:
-        #     break
-
-        time_start = time.time()
-
-    print 'total time:', time.time() - time_start0
+    main()
