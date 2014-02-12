@@ -9,49 +9,59 @@ tool for solve pentamino problem (http://en.wikipedia.org/wiki/Pentomino)
 
 For start solve pentomino task run main.py:
 
-    $ pentamino/./main.py
+    $ pentamino/./main.py -c -o -p -n 2
     decision #1
-    solved by 2.570436 seconds
-      1  1  1  2  3  3  3  4
-      1  2  2  2  3  5  3  4
-      1  2  6  6  5  5  5  4
-      7  6  6 13 13  5  8  4
-      7  7  6 13 13  8  8  4
-      7  9 10 10  8  8 11 11
-      7  9 10 10 11 11 11 12
-      9  9  9 10 12 12 12 12
+    solved by 0.001474 seconds
+    +---+---+---+---+---+---+---+---+
+    |           |   |           |   |
+    +   +---+---+   +   +---+   +   +
+    |   |           |   |   |   |   |
+    +   +   +---+---+---+   +---+   +
+    |   |   |       |           |   |
+    +---+---+   +---+---+   +---+   +
+    |   |       |       |   |   |   |
+    +   +---+   +       +---+   +   +
+    |       |   |       |       |   |
+    +   +---+---+---+---+   +---+---+
+    |   |   |       |       |       |
+    +   +   +       +---+---+   +---+
+    |   |   |       |           |   |
+    +---+   +---+   +---+---+---+   +
+    |           |   |               |
+    +---+---+---+---+---+---+---+---+
 
     decision #2
-    solved by 14.168523 seconds
-      1  1  1  2  3  3  3  4
-      1  2  2  2  3  5  3  4
-      1  2  6  8  5  5  5  4
-      7  6  6  8  8  5  9  4
-      7  7  6  6  8  8  9  4
-      7 12 12 12 12  9  9  9
-      7 12 11 11 10 10 13 13
-     11 11 11 10 10 10 13 13
+    solved by 2.484188 seconds
+    +---+---+---+---+---+---+---+---+
+    |           |   |       |       |
+    +   +---+---+   +---+   +---+   +
+    |   |           |   |       |   |
+    +   +   +---+---+   +---+   +   +
+    |   |   |   |           |   |   |
+    +---+---+   +---+---+   +---+   +
+    |   |       |       |   |   |   |
+    +   +       +       +---+   +---+
+    |   |       |       |           |
+    +   +---+---+---+---+---+   +---+
+    |   |       |           |   |   |
+    +   +   +---+   +---+---+---+   +
+    |   |   |       |   |           |
+    +   +   +---+---+   +---+---+   +
+    |   |       |               |   |
+    +---+---+---+---+---+---+---+---+
 
-    decision #3
-    solved by 0.525675 seconds
-      1  1  1  2  3  3  3  4
-      1  2  2  2  3  5  3  4
-      1  2  6  8  5  5  5  4
-      7  6  6  8  8  5 11  4
-      7  7  6  6  8  8 11  4
-      7  9 12 12 12 12 11 11
-      7  9 12 13 13 10 10 11
-      9  9  9 13 13 10 10 10
+    total time: 2.4882068634
 
-    decision #4
-    solved by 0.197619 seconds
-      1  1  1  2  3  3  3  4
-      1  2  2  2  3  5  3  4
-      1  2  6  8  5  5  5  4
-      7  6  6  8  8  5 11  4
-      7  7  6  6  8  8 11  4
-      7 13 13  9  9  9 11 11
-      7 13 13 12  9 10 10 11
-     12 12 12 12  9 10 10 10
+Options of usage:
 
-    ...
+    $ pentamino/./main.py -h
+    usage: main.py [-h] [-n NUMBER_DECISIONS] [-c] [-p] [-o]
+
+    optional arguments:
+      -h, --help            show this help message and exit
+      -n NUMBER_DECISIONS, --number-decisions NUMBER_DECISIONS
+                            need decisions count
+      -c, --center-square   show decisions where square figure placed in center
+      -p, --pretty-print    pretty print decisions (a bit slow)
+      -o, --only-original   output only original decisions (which are not repeated
+                            by rotations and reflections)
