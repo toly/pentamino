@@ -139,8 +139,11 @@ def pprint_board(matrix):
             if type(new_matrix[y][x]) is int:
                 new_matrix[y][x] = ' ' * WIDTH_FACTOR
 
+    str_rows = []
     for row in new_matrix:
-        print ''.join(map(str, row))
+        str_rows.append(''.join(map(str, row)))
+
+    print '\n'.join(str_rows) + '\n'
 
 
 def reflect_board(board):
