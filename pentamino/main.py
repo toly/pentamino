@@ -4,7 +4,7 @@ __author__ = 'toly'
 import time
 from argparse import ArgumentParser
 
-from base import Figure, init_board, set_figure, get_free_cell, print_board, pprint_board
+from base import Figure, init_board, set_figure, get_free_cell, print_board, pprint_board, board_hash, generate_shadows
 from settings import WIDTH, HEIGHT, FIGURES_RAW
 
 
@@ -28,9 +28,21 @@ def main():
     time_start0 = time.time()
     time_start = time_start0
 
+    decisions = set()
     n = 0
     for decision in make_decisions(board, WIDTH, HEIGHT, figures_dict):
+
+        if args.only_original:
+            current_board_hash = board_hash(decision)
+            if current_board_hash in decisions:
+                continue
+
+            shadow_hashes = map(board_hash, generate_shadows(decision))
+            for shadow_hashe in shadow_hashes:
+                decisions.add(shadow_hashe)
+
         time_solve = time.time() - time_start
+
         n += 1
         print 'decision #%d' % n
         print 'solved by %f seconds' % time_solve
@@ -48,9 +60,11 @@ def main():
 def create_argparser():
     parser = ArgumentParser()
     parser.add_argument('-n', '--number-decisions', type=int, help="need decisions count")
-    parser.add_argument('-c', '--center-square', action="store_true", help="show decisions where "
-                                                                           "square figure placed in center")
+    parser.add_argument('-c', '--center-square', action="store_true",
+                        help="show decisions where square figure placed in center")
     parser.add_argument('-p', '--pretty-print', action="store_true", help="pretty print decisions (a bit slow)")
+    parser.add_argument('-o', '--only-original', action="store_true",
+                        help="output only original decisions (which are not repeated by rotations and reflections)")
     return parser
 
 

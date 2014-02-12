@@ -143,6 +143,45 @@ def pprint_board(matrix):
         print ''.join(map(str, row))
 
 
+def reflect_board(board):
+    return board[::-1]
+
+
+def rotate_right(board):
+    height, width = len(board), len(board[0])
+    new_board = []
+
+    for j in xrange(width):
+        new_row = []
+        for i in xrange(height - 1, -1, -1):
+            new_row.append(board[i][j])
+        new_board.append(new_row)
+
+    return new_board
+
+
+def generate_shadows(board):
+
+    original_board = map(list, board)
+    yield original_board
+
+    reflected_board = reflect_board(original_board)
+    yield reflected_board
+
+    for i in xrange(3):
+        original_board = rotate_right(original_board)
+        reflected_board = rotate_right(reflected_board)
+        yield original_board
+        yield reflected_board
+
+
+def board_hash(board):
+    rows = []
+    for row in board:
+        rows.append(','.join(map(str, row)))
+    return '+'.join(rows)
+
+
 class Figure(BaseObject):
     data = None
     width = None
